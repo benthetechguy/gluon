@@ -3,7 +3,7 @@ package limits
 import (
 	"errors"
 	"fmt"
-	"math"
+	"math/bits"
 
 	"github.com/ProtonMail/gluon/imap"
 )
@@ -55,7 +55,7 @@ func (i IMAP) CheckUIDValidity(uid imap.UID) error {
 func DefaultLimits() IMAP {
 	var maxInt int64
 	// Use MaxInt32 instead of MaxUint32 on 32 bit platforms
-	if uint64(^uintptr(0)) == ^uint64(0) {
+	if bits.UintSize == 64 {
 		maxInt = math.MaxUint32
 	} else {
 		maxInt = math.MaxInt32
